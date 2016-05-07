@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  EarthquakesListTableViewController.h
 //  EarthquakeMonitor
 //
 //  Created by Ignacio on 6/5/16.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface EarthquakesListTableViewController : UITableViewController
 
 @end
-

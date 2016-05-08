@@ -9,13 +9,23 @@
 #import "EarthquakesListTableViewController.h"
 #import "ConnectionManager.h"
 #import "EarthquakeTableViewCell.h"
+#import "EarthquakeMapViewController.h"
 
-@interface EarthquakesListTableViewController () <EarthquakesNotifierDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface EarthquakesListTableViewController ()
+<EarthquakesNotifierDelegate,
+UITableViewDelegate,
+UITableViewDataSource>
 
 @property (strong, nonatomic) NSDictionary * earthquakesResponseDictionary;
 @property (strong, nonatomic) NSArray * earthquakesArray;
+@property (strong, nonatomic) NSString * earthquakeLatitude;
+@property (strong, nonatomic) NSString * earthquakeLongitude;
+@property (strong, nonatomic) NSString * earthquakeRegion;
+@property (strong, nonatomic) NSString * earthquakeMagnitude;
 
 @end
+
+static NSString * const kListToMapSegue = @"ListToMapSegue";
 
 @implementation EarthquakesListTableViewController
 
@@ -66,6 +76,16 @@
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.earthquakeLatitude = [[self.earthquakesArray objectAtIndex:indexPath.row] objectForKey: @"lat"];
+    self.earthquakeLongitude = [[self.earthquakesArray objectAtIndex:indexPath.row] objectForKey: @"lon"];
+    self.earthquakeRegion = [[self.earthquakesArray objectAtIndex:indexPath.row] objectForKey: @"region"];
+    self.earthquakeMagnitude = [[self.earthquakesArray objectAtIndex:indexPath.row] objectForKey: @"magnitude"];
+    
+    [self performSegueWithIdentifier:kListToMapSegue sender:self];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 60;
@@ -76,15 +96,23 @@
     [[ConnectionManager sharedInstance] requestEarthquakes];
 }
 
-/*
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqual:kListToMapSegue])
+    {
+        EarthquakeMapViewController *vc = (EarthquakeMapViewController*)segue.destinationViewController;
+        
+        [vc setCustomLatitudeWithLatitude:self.earthquakeLatitude];
+        [vc setCustomLongitudeWithLongitude:self.earthquakeLongitude];
+        [vc setRegionWithRegion:self.earthquakeRegion];
+        [vc setMagnitudeWithMagnitude:self.earthquakeMagnitude];
+        
+    }
 }
-*/
+
 
 #pragma mark - Notifications
 

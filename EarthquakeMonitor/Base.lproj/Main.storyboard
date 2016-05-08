@@ -96,10 +96,47 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <segue destination="0cZ-Ve-zb4" kind="show" identifier="ListToMapSegue" id="CtP-HJ-GlH"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zyd-zd-rkb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1006.5" y="203.5"/>
+        </scene>
+        <!--Map-->
+        <scene sceneID="5DW-wg-rb5">
+            <objects>
+                <viewController id="0cZ-Ve-zb4" customClass="EarthquakeMapViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="xgp-JC-7ww"/>
+                        <viewControllerLayoutGuide type="bottom" id="5Gh-MC-4LA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bGL-Yw-VvM">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="5vJ-oz-ns5">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="5vJ-oz-ns5" secondAttribute="bottom" id="KJR-hp-M6Q"/>
+                            <constraint firstItem="5vJ-oz-ns5" firstAttribute="top" secondItem="xgp-JC-7ww" secondAttribute="bottom" id="SIx-CG-PTt"/>
+                            <constraint firstItem="5vJ-oz-ns5" firstAttribute="leading" secondItem="bGL-Yw-VvM" secondAttribute="leading" id="cLd-40-7yD"/>
+                            <constraint firstAttribute="trailing" secondItem="5vJ-oz-ns5" secondAttribute="trailing" id="hvQ-8I-ijk"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Map" id="Tmx-Qe-7iV"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="mapView" destination="5vJ-oz-ns5" id="Jcp-VI-4xJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="62t-nC-m5y" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1524.5" y="203.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="zv6-d5-5B8">

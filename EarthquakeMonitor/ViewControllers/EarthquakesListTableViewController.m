@@ -28,6 +28,13 @@
     [[ConnectionManager sharedInstance] setNewDelegate:self];
     [[ConnectionManager sharedInstance] requestEarthquakes];
     
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.backgroundColor = [UIColor darkGrayColor];
+    self.refreshControl.tintColor = [UIColor whiteColor];
+    [self.refreshControl addTarget:self
+                            action:@selector(updateList)
+                  forControlEvents:UIControlEventValueChanged];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -59,6 +66,11 @@
     return cell;
 }
 
+-(void)updateList
+{
+    [[ConnectionManager sharedInstance] requestEarthquakes];
+}
+
 /*
 #pragma mark - Navigation
 
@@ -83,11 +95,14 @@
     
     self.earthquakesArray = data;
     
+    [self.refreshControl endRefreshing];
     [self.tableView reloadData];
 }
 
 -(void)notifyRequestErrorWithError:(NSError *)error
 {
+    [self.refreshControl endRefreshing];
+    
     UIAlertController * alert = [UIAlertController
                                  alertControllerWithTitle:@"Error"
                                  message:@"Error retrieving earthquakes"

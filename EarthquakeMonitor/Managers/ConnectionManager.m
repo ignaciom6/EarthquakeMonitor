@@ -12,7 +12,6 @@
 @interface ConnectionManager()
 
 @property (nonatomic, strong) NSMutableDictionary * earthquakesDictionary;
-//@property (strong, nonatomic) id<EarthquakesNotifierDelegate> delegate;
 
 @end
 

@@ -46,8 +46,10 @@
     self.scaleLabel.text = scale;
     
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    NSNumber *scaleNumber = [[NSNumber alloc] init];
     formatter.numberStyle = NSNumberFormatterDecimalStyle;
-    NSNumber *scaleNumber = [formatter numberFromString:scale];
+    formatter.decimalSeparator = @".";
+    scaleNumber = [formatter numberFromString:scale];
     
     [self setEarthquakeIntensityColorForScale:scaleNumber];
 }

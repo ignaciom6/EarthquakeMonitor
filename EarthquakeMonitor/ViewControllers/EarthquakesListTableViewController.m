@@ -66,6 +66,11 @@
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
+}
+
 -(void)updateList
 {
     [[ConnectionManager sharedInstance] requestEarthquakes];

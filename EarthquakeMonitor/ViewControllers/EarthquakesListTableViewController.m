@@ -26,6 +26,8 @@ UITableViewDataSource>
 @end
 
 static NSString * const kListToMapSegue = @"ListToMapSegue";
+static UIView *spinnerView = nil;
+static int spinnerTag = 1;
 
 @implementation EarthquakesListTableViewController
 
@@ -34,6 +36,7 @@ static NSString * const kListToMapSegue = @"ListToMapSegue";
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     [[ConnectionManager sharedInstance] setNewDelegate:self];
     [[ConnectionManager sharedInstance] requestEarthquakes];
@@ -45,6 +48,7 @@ static NSString * const kListToMapSegue = @"ListToMapSegue";
                             action:@selector(updateList)
                   forControlEvents:UIControlEventValueChanged];
     
+    [self showLoading];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -96,6 +100,20 @@ static NSString * const kListToMapSegue = @"ListToMapSegue";
     [[ConnectionManager sharedInstance] requestEarthquakes];
 }
 
+-(void)showLoading
+{
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    spinner.center = self.view.center;
+    spinner.tag = spinnerTag;
+    [self.view addSubview:spinner];
+    [spinner startAnimating];
+}
+
+-(void)hideLoading
+{
+    [[self.view viewWithTag:spinnerTag] stopAnimating];
+}
+
 
 #pragma mark - Navigation
 
@@ -130,6 +148,8 @@ static NSString * const kListToMapSegue = @"ListToMapSegue";
     
     [self.refreshControl endRefreshing];
     [self.tableView reloadData];
+    
+    [self hideLoading];
 }
 
 -(void)notifyRequestErrorWithError:(NSError *)error
@@ -147,6 +167,8 @@ static NSString * const kListToMapSegue = @"ListToMapSegue";
     
     UIViewController *vc = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
     [vc presentViewController:alert animated:YES completion:nil];
+    
+    [self hideLoading];
 }
 
 @end

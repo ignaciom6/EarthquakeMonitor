@@ -59,19 +59,19 @@
     }
     else if (scale > 5)
     {
-        self.earthquakeIntensityView.backgroundColor = [UIColor orangeColor];
+        self.earthquakeIntensityView.backgroundColor = [UIColor colorWithRed:(254/255.0) green:(198/255.0) blue:(1/255.0) alpha:1];
     }
     else if (scale > 3)
     {
-        self.earthquakeIntensityView.backgroundColor = [UIColor greenColor];
+        self.earthquakeIntensityView.backgroundColor = [UIColor colorWithRed:(122/255.0) green:(254/255.0) blue:(145/255.0) alpha:1];
     }
     else if (scale > 1)
     {
-        self.earthquakeIntensityView.backgroundColor = [UIColor blueColor];
+        self.earthquakeIntensityView.backgroundColor = [UIColor colorWithRed:(176/255.0) green:(211/255.0) blue:(253/255.0) alpha:1];
     }
     else
     {
-        self.earthquakeIntensityView.backgroundColor = [UIColor lightGrayColor];
+        self.earthquakeIntensityView.backgroundColor = [UIColor colorWithRed:(234/255.0) green:(234/255.0) blue:(234/255.0) alpha:1];
     }
 }
 

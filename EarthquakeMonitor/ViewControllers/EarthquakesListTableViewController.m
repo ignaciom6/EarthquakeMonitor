@@ -42,7 +42,7 @@ static int spinnerTag = 1;
     [[ConnectionManager sharedInstance] requestEarthquakes];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
-    self.refreshControl.backgroundColor = [UIColor darkGrayColor];
+    self.refreshControl.backgroundColor = [UIColor lightGrayColor];
     self.refreshControl.tintColor = [UIColor whiteColor];
     [self.refreshControl addTarget:self
                             action:@selector(updateList)

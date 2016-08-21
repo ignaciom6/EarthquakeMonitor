@@ -41,36 +41,31 @@
     self.dateLabel.text = date;
 }
 
--(void)setEarthquakeScaleWithScale:(NSString *)scale
+-(void)setEarthquakeScaleWithScale:(double)scale
 {
-    self.scaleLabel.text = scale;
+    NSNumber * doubleNumber = [NSNumber numberWithDouble:scale];
+    NSString * scaleValue = [doubleNumber stringValue];
     
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    NSNumber *scaleNumber = [[NSNumber alloc] init];
-    formatter.numberStyle = NSNumberFormatterDecimalStyle;
-    formatter.decimalSeparator = @".";
-    scaleNumber = [formatter numberFromString:scale];
+    self.scaleLabel.text = scaleValue;
     
-    [self setEarthquakeIntensityColorForScale:scaleNumber];
+    [self setEarthquakeIntensityColorForScale:scale];
 }
 
--(void)setEarthquakeIntensityColorForScale:(NSNumber *)scale
-{
-    double compareScale = [scale doubleValue];
-    
-    if (compareScale > 7)
+-(void)setEarthquakeIntensityColorForScale:(double)scale
+{    
+    if (scale > 7)
     {
         self.earthquakeIntensityView.backgroundColor = [UIColor redColor];
     }
-    else if (compareScale > 5)
+    else if (scale > 5)
     {
         self.earthquakeIntensityView.backgroundColor = [UIColor orangeColor];
     }
-    else if (compareScale > 3)
+    else if (scale > 3)
     {
         self.earthquakeIntensityView.backgroundColor = [UIColor greenColor];
     }
-    else if (compareScale > 1)
+    else if (scale > 1)
     {
         self.earthquakeIntensityView.backgroundColor = [UIColor blueColor];
     }

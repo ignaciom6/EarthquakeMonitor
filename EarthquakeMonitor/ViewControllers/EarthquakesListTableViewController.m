@@ -69,23 +69,32 @@ static int spinnerTag = 1;
 }
 
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     EarthquakeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EarthquakeCell" forIndexPath:indexPath];
     
-    [cell setRegionNameWhithName:[[self.earthquakesArray objectAtIndex:indexPath.row] objectForKey: @"region"]];
-    [cell setEarthquakeDateWithDate:[[self.earthquakesArray objectAtIndex:indexPath.row] objectForKey:@"timedate"]];
-    [cell setEarthquakeScaleWithScale:[[self.earthquakesArray objectAtIndex:indexPath.row] objectForKey:@"magnitude"]];
+    NSDictionary * properties = [[self.earthquakesArray objectAtIndex:indexPath.row] objectForKey:@"properties"];
     
+    [cell setRegionNameWhithName:[self obtainPlaceFromDictionary:properties]];
+    [cell setEarthquakeDateWithDate:[self obtainDateFromDictionary:properties]];
+    [cell setEarthquakeScaleWithScale:[self obtainMagnitudeFromDictionary:properties]];
     
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.earthquakeLatitude = [[self.earthquakesArray objectAtIndex:indexPath.row] objectForKey: @"lat"];
-    self.earthquakeLongitude = [[self.earthquakesArray objectAtIndex:indexPath.row] objectForKey: @"lon"];
-    self.earthquakeRegion = [[self.earthquakesArray objectAtIndex:indexPath.row] objectForKey: @"region"];
-    self.earthquakeMagnitude = [[self.earthquakesArray objectAtIndex:indexPath.row] objectForKey: @"magnitude"];
+    NSDictionary * properties = [[self.earthquakesArray objectAtIndex:indexPath.row] objectForKey:@"properties"];
+    NSDictionary * geometry = [[self.earthquakesArray objectAtIndex:indexPath.row] objectForKey:@"geometry"];
+    NSArray * longAndLat = [geometry objectForKey:@"coordinates"];
+    
+    NSNumber * doubleMagnitude = [NSNumber numberWithDouble:[self obtainMagnitudeFromDictionary:properties]];
+    NSString * magnitude = [doubleMagnitude stringValue];
+    
+    self.earthquakeLatitude = [longAndLat objectAtIndex:1];
+    self.earthquakeLongitude = [longAndLat objectAtIndex:0];
+    self.earthquakeRegion = [self obtainPlaceFromDictionary:properties];
+    self.earthquakeMagnitude = magnitude;
     
     [self performSegueWithIdentifier:kListToMapSegue sender:self];
 }
@@ -112,6 +121,34 @@ static int spinnerTag = 1;
 -(void)hideLoading
 {
     [[self.view viewWithTag:spinnerTag] stopAnimating];
+}
+
+-(NSString *)obtainPlaceFromDictionary: (NSDictionary*) propertiesDictionary
+{
+    NSString * place = [[NSString alloc] init];
+    place = [propertiesDictionary objectForKey:@"place"];
+    return place;
+}
+
+-(double)obtainMagnitudeFromDictionary: (NSDictionary*) propertiesDictionary
+{
+    double mag;
+    mag = [[propertiesDictionary objectForKey:@"mag"] doubleValue];
+    return mag;
+}
+
+-(NSString *)obtainDateFromDictionary: (NSDictionary*) propertiesDictionary
+{
+    NSString * epochTime;
+    epochTime = [propertiesDictionary objectForKey:@"time"];
+    NSTimeInterval seconds = [epochTime doubleValue] / 1000;
+    
+    NSDate * date = [[NSDate alloc] initWithTimeIntervalSince1970:seconds];
+    
+    NSString * dateString = [NSDateFormatter localizedStringFromDate:date
+                                                          dateStyle:NSDateFormatterLongStyle
+                                                          timeStyle:NSDateFormatterLongStyle];
+    return dateString;
 }
 
 

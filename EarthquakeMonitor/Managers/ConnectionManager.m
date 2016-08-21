@@ -15,11 +15,7 @@
 
 @end
 
-static NSString * const kBaseUrl = @"https://montanaflynn-earthquake-seismology.p.mashape.com/eqs?limit=30&min_magnitude=1";
-static NSString * const kUserToken = @"hUGMd0Wm8amshCLawebMgVlTJxXGp1YDRQMjsnwfDrmniDhk1c";
-static NSString * const kApplicationJson = @"application/json";
-static NSString * const kMashapeKeyHeader = @"X-Mashape-Key";
-static NSString * const kAcceptHeader = @"Accept";
+static NSString * const kBaseUrl = @"http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=20";
 
 @implementation ConnectionManager
 
@@ -50,15 +46,16 @@ static NSString * const kAcceptHeader = @"Accept";
     NSURL *url = [NSURL URLWithString:kBaseUrl];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager.requestSerializer setValue:kUserToken forHTTPHeaderField:kMashapeKeyHeader];
-    [manager.requestSerializer setValue:kApplicationJson forHTTPHeaderField:kAcceptHeader];
     
     [manager GET:url.absoluteString parameters:nil progress:nil
          success:^(NSURLSessionTask *task, id responseObject) {
              
              NSLog(@"JSON: %@", responseObject);
              
-             self.earthquakesDictionary = [responseObject objectForKey:@"earthquakes"];
+             self.earthquakesDictionary = [responseObject objectForKey:@"features"];
+             
+             NSLog(@"Array count: %lu", (unsigned long)self.earthquakesDictionary.count);
+
              
              if (self.delegate && [self.delegate respondsToSelector:@selector(notifyRequestSuccessWithDictionary:)])
              {

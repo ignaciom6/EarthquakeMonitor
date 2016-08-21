@@ -12,6 +12,6 @@
 
 -(void)setRegionNameWhithName:(NSString *)region;
 -(void)setEarthquakeDateWithDate:(NSString *)date;
--(void)setEarthquakeScaleWithScale:(NSString *)scale;
+-(void)setEarthquakeScaleWithScale:(double)scale;
 
 @end

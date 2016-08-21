@@ -142,7 +142,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="VKP-Bz-kH8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.023529411760000001" green="0.47843137250000001" blue="0.70980392160000005" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.16862745098039217" green="0.76862745098039209" blue="0.74901960784313726" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </textAttributes>

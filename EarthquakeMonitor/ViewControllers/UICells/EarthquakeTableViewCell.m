@@ -53,19 +53,19 @@
 
 -(void)setEarthquakeIntensityColorForScale:(double)scale
 {    
-    if (scale > 7)
+    if (scale == 9)
     {
         self.earthquakeIntensityView.backgroundColor = [UIColor redColor];
     }
-    else if (scale > 5)
+    else if (scale >= 7)
     {
         self.earthquakeIntensityView.backgroundColor = [UIColor colorWithRed:(254/255.0) green:(198/255.0) blue:(1/255.0) alpha:1];
     }
-    else if (scale > 3)
+    else if (scale >= 5)
     {
         self.earthquakeIntensityView.backgroundColor = [UIColor colorWithRed:(122/255.0) green:(254/255.0) blue:(145/255.0) alpha:1];
     }
-    else if (scale > 1)
+    else if (scale >= 2)
     {
         self.earthquakeIntensityView.backgroundColor = [UIColor colorWithRed:(176/255.0) green:(211/255.0) blue:(253/255.0) alpha:1];
     }

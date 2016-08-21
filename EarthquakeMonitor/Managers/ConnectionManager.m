@@ -54,9 +54,6 @@ static NSString * const kBaseUrl = @"http://earthquake.usgs.gov/fdsnws/event/1/q
              
              self.earthquakesDictionary = [responseObject objectForKey:@"features"];
              
-             NSLog(@"Array count: %lu", (unsigned long)self.earthquakesDictionary.count);
-
-             
              if (self.delegate && [self.delegate respondsToSelector:@selector(notifyRequestSuccessWithDictionary:)])
              {
                  [self.delegate notifyRequestSuccessWithDictionary:self.earthquakesDictionary];
